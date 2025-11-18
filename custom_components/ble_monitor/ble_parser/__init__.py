@@ -298,6 +298,7 @@ class BleParser:
                 for man_spec_data in man_spec_data_list:
                     # parse data for sensors with manufacturer specific data
                     comp_id = (man_spec_data[3] << 8) | man_spec_data[2]
+                    _LOGGER.debug("Manufacturer Specific Data Company ID: %s for MAC: %s", hex(comp_id), to_mac(mac))
                     is_xiaomi_ptx = to_mac(mac) == 'A4:C1:38:48:E2:8A'
                     data_len = man_spec_data[0]
                     # Filter on Company Identifier

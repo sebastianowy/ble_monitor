@@ -1434,6 +1434,9 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
 
     # determine the device type
     device_id = data[6] + (data[7] << 8)
+    _LOGGER.debug("Xiaomi device ID: %s", hex(device_id))
+    if to_mac(mac) == "A4:C1:38:48:E2:8A":
+        device_id = 0x38BB
     try:
         device_type = XIAOMI_TYPE_DICT[device_id]
     except KeyError:

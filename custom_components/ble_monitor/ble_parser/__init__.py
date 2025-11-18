@@ -198,7 +198,7 @@ class BleParser:
         tracker_data = {}
         uuid = None
         unknown_sensor = False
-        _LOGGER.debug("parse_advertisement")
+        _LOGGER.debug("parse_advertisement called for MAC: %s, RSSI: %s, service_class_uuid16: %s, service_class_uuid128: %s, local_name: %s, service_data_list: %s, man_spec_data_list: %s",            to_mac(mac), rssi, service_class_uuid16, service_class_uuid128, local_name, service_data_list, man_spec_data_list)
         if service_data_list is None:
             service_data_list = []
         if man_spec_data_list is None:

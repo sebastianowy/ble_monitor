@@ -1490,6 +1490,7 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
             # only process messages with same priority that have a unique packet id
             if prev_packet == packet_id:
                 if self.filter_duplicates is True:
+                    _LOGGER.debug("Xiaomi advertisement received, MAC: %s, Adv: %s, packet id: %s, prev packet id: %s, filter_duplicates: %s", to_mac(mac), data.hex(), packet_id, prev_packet, self.filter_duplicates)
                     return None
                 else:
                     pass
@@ -1502,8 +1503,8 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
             return None
     else:
         if prev_packet == packet_id:
-            _LOGGER.debug("Xiaomi advertisement received, MAC: %s, Adv: %s, duplicate packet id: %s, filter_duplicates: %s", to_mac(mac), data.hex(), packet_id, self.filter_duplicates)
-            if self.filter_duplicates is True:
+            _LOGGER.debug("Xiaomi advertisement received, MAC: %s, Adv: %s, packet id: %s, prev packet id: %s, filter_duplicates: %s", to_mac(mac), data.hex(), packet_id, prev_packet, self.filter_duplicates)
+            if packet_id != 0 and self.filter_duplicates is True:
                 # only process messages with highest priority and messages with unique packet id
                 return None
     self.lpacket_ids[mac] = packet_id

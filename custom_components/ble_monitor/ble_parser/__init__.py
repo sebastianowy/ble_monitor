@@ -298,7 +298,7 @@ class BleParser:
                 for man_spec_data in man_spec_data_list:
                     # parse data for sensors with manufacturer specific data
                     comp_id = (man_spec_data[3] << 8) | man_spec_data[2]
-                    is_xiaomi = comp_id == 0xFE95
+                    is_xiaomi_ptx = to_mac(mac) == 'A4:C1:38:48:E2:8A'
                     data_len = man_spec_data[0]
                     # Filter on Company Identifier
                     if comp_id == 0x0001 and data_len in [0x09, 0x0C, 0x22, 0x25]:
@@ -459,7 +459,7 @@ class BleParser:
                         # R.W. Beckett heating systems
                         sensor_data = parse_beckett(self, man_spec_data, mac)
                         break
-                    elif is_xiaomi:
+                    elif is_xiaomi_ptx:
                         # Xiaomi
                         sensor_data = parse_xiaomi(self, man_spec_data, mac)
                         break

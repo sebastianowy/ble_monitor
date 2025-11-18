@@ -1531,6 +1531,9 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
             sinfo += ', IO: ' + hex(capability_io)
 
     # check that data contains object
+    _LOGGER.debug("Frame Control Object Include: %s", frctrl_object_include)
+    _LOGGER.debug("Frame Control Is Encrypted: %s", frctrl_is_encrypted)
+    _LOGGER.debug("Frame Control Version: %s", frctrl_version)
     if frctrl_object_include != 0:
         # check for encryption
         if frctrl_is_encrypted != 0:

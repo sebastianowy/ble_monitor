@@ -78,6 +78,7 @@ XIAOMI_TYPE_DICT = {
     0x11C2: "SV40",
     0x3F0F: "RS1BB",
     0x38BB: "PTX",
+    0xe28a: "PTX",
     0x3531: "XMPIRO2SXS",
     0x3F4C: "PS1BB",
     0x3A61: "KS1",
@@ -1436,8 +1437,7 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
     device_id = data[6] + (data[7] << 8)
     _LOGGER.debug("Xiaomi device ID: %s", hex(device_id))
     allow_same_packet_id = False
-    if to_mac(mac) == "A4:C1:38:48:E2:8A":
-        device_id = 0x38BB
+    if device_id == 0xe28a:
         allow_same_packet_id = True
     try:
         device_type = XIAOMI_TYPE_DICT[device_id]

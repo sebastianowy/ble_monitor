@@ -262,7 +262,7 @@ class BleParser:
                         # UUID16 = Qingping
                         sensor_data = parse_qingping(self, service_data, mac)
                         break
-                    elif uuid16 == 0xFE95:
+                    elif is_xiaomi:
                         # UUID16 = Xiaomi
                         sensor_data = parse_xiaomi(self, service_data, mac)
                         break
@@ -298,6 +298,7 @@ class BleParser:
                 for man_spec_data in man_spec_data_list:
                     # parse data for sensors with manufacturer specific data
                     comp_id = (man_spec_data[3] << 8) | man_spec_data[2]
+                    is_xiaomi = comp_id == 0xFE95
                     data_len = man_spec_data[0]
                     # Filter on Company Identifier
                     if comp_id == 0x0001 and data_len in [0x09, 0x0C, 0x22, 0x25]:
@@ -457,6 +458,10 @@ class BleParser:
                     elif comp_id == 0x061A:
                         # R.W. Beckett heating systems
                         sensor_data = parse_beckett(self, man_spec_data, mac)
+                        break
+                    elif is_xiaomi:
+                        # Xiaomi
+                        sensor_data = parse_xiaomi(self, man_spec_data, mac)
                         break
                     # Filter on part of the UUID16
                     elif man_spec_data[2] == 0xC0 and data_len == 0x10:

@@ -118,6 +118,7 @@ class BleParser:
             rssi = rssi - 256
         # MAC address
         mac = (data[8 if is_ext_packet else 7:14 if is_ext_packet else 13])[::-1]
+        _LOGGER.debug("parse_raw_data called with data: %s for MAC: %s, RSSI: %s", data, to_mac(mac), rssi)
         complete_local_name = ""
         shortened_local_name = ""
         service_class_uuid16 = None
@@ -131,6 +132,7 @@ class BleParser:
                 adstruct = data[adpayload_start:adpayload_start + adstuct_size]
                 # https://www.bluetooth.com/specifications/assigned-numbers/generic-access-profile/
                 adstuct_type = adstruct[1]
+                _LOGGER.debug("AD Structure Type: %s and data: %s for MAC: %s", hex(adstuct_type), adstruct, to_mac(mac))
                 if adstuct_type == 0x02:
                     # AD type 'Incomplete List of 16-bit Service Class UUIDs'
                     service_class_uuid16 = (adstruct[2] << 8) | adstruct[3]

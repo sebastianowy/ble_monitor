@@ -1502,6 +1502,7 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
             return None
     else:
         if prev_packet == packet_id:
+            _LOGGER.debug("Xiaomi advertisement received, MAC: %s, Adv: %s, duplicate packet id: %s, filter_duplicates: %s", to_mac(mac), data.hex(), packet_id, self.filter_duplicates)
             if self.filter_duplicates is True:
                 # only process messages with highest priority and messages with unique packet id
                 return None
@@ -1545,6 +1546,8 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
         # data does not contain Object
         _LOGGER.debug("Advertisement doesn't contain payload, adv: %s", data.hex())
         return None
+
+    _LOGGER.debug("xiaomi payload: %s from mac: %s", payload.hex() if payload else None, to_mac(mac))
 
     result = {
         "mac": to_unformatted_mac(mac),

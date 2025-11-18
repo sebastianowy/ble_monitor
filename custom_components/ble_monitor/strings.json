@@ -2,7 +2,7 @@
   "config": {
     "step": {
       "user": {
-        "title": "Passive BLE Monitor",
+        "title": "DEV Passive BLE Monitor",
         "description": "Setup of your BLE monitor configuration",
         "data": {
           "bt_interface": "MAC address of the Bluetooth interface/adapter",
@@ -51,7 +51,7 @@
   "options": {
     "step": {
       "init": {
-        "title": "Passive BLE Monitor options",
+        "title": "DEV Passive BLE Monitor options",
         "description": "Scanning will be restarted after pressing 'SUBMIT'",
         "data": {
           "bt_interface": "MAC address of the Bluetooth interface/adapter",

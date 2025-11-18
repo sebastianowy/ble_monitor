@@ -198,6 +198,7 @@ class BleParser:
         tracker_data = {}
         uuid = None
         unknown_sensor = False
+        _LOGGER.debug("parse_advertisement")
         if service_data_list is None:
             service_data_list = []
         if man_spec_data_list is None:
@@ -208,6 +209,8 @@ class BleParser:
                 for service_data in service_data_list:
                     # parse data for sensors with service data
                     uuid16 = (service_data[3] << 8) | service_data[2]
+                    is_xiaomi = uuid16 == 0xFE95
+                    _LOGGER.debug("Service Data UUID16: %s for MAC: %s is_xiaomi: %s", hex(uuid16), to_mac(mac), is_xiaomi)
                     if uuid16 == 0x1809:
                         # UUID16 = Health Thermometer service (used by Relsib)
                         if len(service_data_list) == 3:

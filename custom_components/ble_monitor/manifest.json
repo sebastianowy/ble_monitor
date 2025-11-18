@@ -1,6 +1,6 @@
 {
   "domain": "ble_monitor",
-  "name": "Passive BLE monitor",
+  "name": "DEV Passive BLE monitor",
   "codeowners": ["@Ernst79", "@myhomeiot"],
   "config_flow": true,
   "dependencies": [],
@@ -14,5 +14,5 @@
     "btsocket>=0.3.0",
     "pyric>=0.1.6.3"
   ],
-  "version": "13.10.1"
+  "version": "13.10.1-dev"
 }

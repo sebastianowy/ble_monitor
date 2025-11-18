@@ -1391,6 +1391,7 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
     """Parser for Xiaomi sensors"""
     # check for adstruc length
     i = 9  # till Frame Counter
+    _LOGGER.debug("parse_xiaomi called for data: %s from MAC: %s", data.hex(), to_mac(mac))
     msg_length = len(data)
     if msg_length < i:
         _LOGGER.debug("Invalid data length (initial check), adv: %s", data.hex())
@@ -1444,6 +1445,8 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
             )
         _LOGGER.debug("Unknown Xiaomi device found. Data: %s", data.hex())
         return None
+    
+    _LOGGER.debug("Xiaomi device type: %s", device_type)
 
     packet_id = data[8]
 

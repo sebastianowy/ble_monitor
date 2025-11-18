@@ -1435,8 +1435,10 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
     # determine the device type
     device_id = data[6] + (data[7] << 8)
     _LOGGER.debug("Xiaomi device ID: %s", hex(device_id))
+    allow_same_packet_id = False
     if to_mac(mac) == "A4:C1:38:48:E2:8A":
         device_id = 0x38BB
+        allow_same_packet_id = True
     try:
         device_type = XIAOMI_TYPE_DICT[device_id]
     except KeyError:
@@ -1492,7 +1494,7 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
         elif adv_priority == prev_adv_priority:
             # only process messages with same priority that have a unique packet id
             if prev_packet == packet_id:
-                if self.filter_duplicates is True:
+                if allow_same_packet_id is False and self.filter_duplicates is True:
                     _LOGGER.debug("Xiaomi advertisement received, MAC: %s, Adv: %s, packet id: %s, prev packet id: %s, filter_duplicates: %s", to_mac(mac), data.hex(), packet_id, prev_packet, self.filter_duplicates)
                     return None
                 else:
@@ -1507,7 +1509,7 @@ def parse_xiaomi(self, data: bytes, mac: bytes):
     else:
         if prev_packet == packet_id:
             _LOGGER.debug("Xiaomi advertisement received, MAC: %s, Adv: %s, packet id: %s, prev packet id: %s, filter_duplicates: %s", to_mac(mac), data.hex(), packet_id, prev_packet, self.filter_duplicates)
-            if packet_id != 0 and self.filter_duplicates is True:
+            if allow_same_packet_id is False and self.filter_duplicates is True:
                 # only process messages with highest priority and messages with unique packet id
                 return None
     self.lpacket_ids[mac] = packet_id
